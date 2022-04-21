@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, FlatList } from "react-native";
 import { getStaticMapUrl } from "../services/MapService";
+import Checkbox from "expo-checkbox";
 
 const width = 400;
 const height = 200;
@@ -8,6 +9,7 @@ const height = 200;
 export default function StadiumScreen({ route }) {
   const [mapUrl, setMapUrl] = useState(null);
   const [stadium, setStadium] = useState(route.params.stadium);
+  const [checked, setChecked] = useState(false);
 
   useEffect(() => {
     const fetchedUrl = getStaticMapUrl(
@@ -22,8 +24,6 @@ export default function StadiumScreen({ route }) {
   }, []);
 
   function renderTeam(itemData) {
-    console.log(itemData);
-
     return (
       <View style={styles.teamContainer}>
         <Text style={styles.bullet}>{"\u2022"}</Text>
@@ -43,6 +43,14 @@ export default function StadiumScreen({ route }) {
           renderItem={renderTeam}
           keyExtractor={(item) => item}
         ></FlatList>
+        <View style={styles.checkboxContainer}>
+          <Text>I've been here!</Text>
+          <Checkbox
+            style={styles.checkbox}
+            value={checked}
+            onValueChange={setChecked}
+          ></Checkbox>
+        </View>
       </View>
     </View>
   );
@@ -69,5 +77,12 @@ const styles = StyleSheet.create({
   },
   bullet: {
     paddingTop: 5,
+  },
+  checkboxContainer: {
+    paddingTop: 20,
+    flexDirection: "row",
+  },
+  checkbox: {
+    marginLeft: 20,
   },
 });
