@@ -44,7 +44,7 @@ export default function StadiumsScreen({ route }) {
       <FlatList
         data={stadiums}
         renderItem={renderStadium}
-        keyExtractor={(item) => item.Id}
+        keyExtractor={(item) => item.id}
       ></FlatList>
     </View>
   );
