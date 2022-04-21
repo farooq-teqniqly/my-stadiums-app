@@ -1,20 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-get-random-values";
+import { StatusBar } from "expo-status-bar";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from "./screens/HomeScreen";
+import StadiumsScreen from "./screens/StadiumsScreen";
+import StadiumScreen from "./screens/StadiumScreen";
+import CategoriesContextProvider from "./contexts/CategoriesContext";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+    <>
       <StatusBar style="auto" />
-    </View>
+      <CategoriesContextProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen
+              name="Home"
+              component={HomeScreen}
+              options={{
+                title: "My Stadiums",
+                headerShown: true,
+              }}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Stadiums"
+              component={StadiumsScreen}
+              options={({ route }) => ({
+                title: route.params.category.name + " Stadiums",
+              })}
+            ></Stack.Screen>
+            <Stack.Screen
+              name="Stadium"
+              component={StadiumScreen}
+              options={({ route }) => ({
+                title: route.params.stadium.name,
+              })}
+            ></Stack.Screen>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </CategoriesContextProvider>
+    </>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
