@@ -4,6 +4,12 @@ import { useContext } from "react";
 import { Pressable, Text, StyleSheet, View } from "react-native";
 import { CategoriesContext } from "../contexts/CategoriesContext";
 import Theme from "../Theme";
+import openDatabase from "../data/Database";
+
+let db = null;
+openDatabase().then((database) => {
+  db = database;
+});
 
 export default function HomeScreen() {
   const context = useContext(CategoriesContext);
